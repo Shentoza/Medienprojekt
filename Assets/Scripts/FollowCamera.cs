@@ -22,16 +22,14 @@ public class FollowCamera : MonoBehaviour {
 
 	void Awake()
 	{
-		player = GameObject.Find ("Player").transform;
+		player = GameObject.Find ("roundy").transform;
 		if(player == null)
 		{
 			Debug.LogError("Player object not found");
 		}
-		var backgroundBounds = GameObject.Find ("background").GetComponent<Renderer>().bounds;
-		var camTopLeft = GetComponent<Camera> ().ViewportToWorldPoint (new Vector3 (0, 0, 0));
-		var camBottomRight = GetComponent<Camera> ().ViewportToWorldPoint (new Vector3 (1, 1, 0));
-		minXandY.x = backgroundBounds.min.x - camTopLeft.x;
-		maxXandY.x = backgroundBounds.max.x - camBottomRight.x;
+
+		minXandY.x = -100;
+		maxXandY.x = 100;
 
 	}
 

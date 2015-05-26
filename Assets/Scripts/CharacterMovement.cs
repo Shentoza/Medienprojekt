@@ -15,33 +15,22 @@ public class CharacterMovement : MonoBehaviour {
 	//Speed modifier
 	public float speed = 4.0f;
 
-	private Animator anim;
+	//private Animator anim;
 
 	private GameObject playerSprite;
 
 	void Awake()
 	{
 		playerRigidBody2D = (Rigidbody2D)GetComponent (typeof(Rigidbody2D));
-		playerSprite = transform.Find ("PlayerSprite").gameObject;
-		anim = (Animator)playerSprite.GetComponent (typeof(Animator));
+
 	}
 	// Update is called once per frame
 	void Update () {
 		movePlayerVector = Input.GetAxis ("Horizontal");
 		playerRigidBody2D.velocity = new Vector2 (movePlayerVector * speed, playerRigidBody2D.velocity.y);
-		if (movePlayerVector > 0 && !facingRight)
-			Flip();
-		else if (movePlayerVector < 0 && facingRight)
-			Flip();
 
-		anim.SetFloat ("speed", Mathf.Abs (movePlayerVector));
+
+		//anim.SetFloat ("speed", Mathf.Abs (movePlayerVector));
 	}
-	void Flip()
-	{
-		facingRight = !facingRight;
-		//Multiply players x local scale by -1
-		Vector3 theScale = playerSprite.transform.localScale;
-		theScale.x *= -1;
-		playerSprite.transform.localScale = theScale;
-	}
+
 }
