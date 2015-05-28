@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TreeEditor;
+using ECS;
 
 public class CharacterMovement : MonoBehaviour {
-
 
 	//RigidBody component
 	private Rigidbody2D playerRigidBody2D;

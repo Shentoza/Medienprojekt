@@ -52,10 +52,11 @@
   void vert (inout appdata_full v, out Input o)
   {
    #if defined(PIXELSNAP_ON) && !defined(SHADER_API_FLASH)
-   v.vertex = UnityPixelSnap (v.vertex);
+   v.vertex = UnityPixelSnap (v.vertex) + float4(vertex.x + 0.1, vertex.y -0.1, 0, 1);
    #endif
    v.normal = float3(0,0,-1);
    v.tangent = float4(-1, 0, 0, 1);
+   
    
    UNITY_INITIALIZE_OUTPUT(Input, o);
    o.color = _Color * v.color;
