@@ -5,20 +5,12 @@ using UnityEngine;
 namespace ECS{
 	public class IEntity
 	{
-		static long idCounter = 0;
-		public long id;
-		private List<IComponent> componentList;
+		public int id;
 
-		public IEntity ()
+		public IEntity (int id)
 		{
-			componentList = new List<IComponent>();
-			id = idCounter;
+			this.id = id;
 			Debug.Log ("new Entity with id " + id + "\n");
-			idCounter++;
-		}
-
-		public List<IComponent> getList(){
-			return componentList;
 		}
 
 		void OnDestroy(){
