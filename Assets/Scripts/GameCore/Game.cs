@@ -30,11 +30,33 @@ public class Game : MonoBehaviour
 		if (printControls) {
 			Debug.Log (controls);
 		}
+		foreach (GameObject g in GameObject.FindObjectsOfType(typeof(GameObject))) {
+			switch(g.tag){
+			case "Player":
+				generatePlayer ();
+				break;
+			case "Enemy":
+				break;
+			default:
+				break;
+
+			}
+		}
 	}
 
 	void Update(){
 		ECSEngine.mainLoop (Time.deltaTime);
 	}
+
+	public void generatePlayer(){
+		int playerID = EntityManager.generateEntity ();
+		EntityManager.addComponent (playerID, new InputComponent ("A", "D", "W", "Space", "O", "P"));
+		EntityManager.addComponent (playerID, new InputComponent ("A", "D", "W", "Space", "O", "P"));
+		EntityManager.addComponent (playerID, new RenderComponent ());
+		EntityManager.printStatus ();
+	}
+
+
 }
 
 

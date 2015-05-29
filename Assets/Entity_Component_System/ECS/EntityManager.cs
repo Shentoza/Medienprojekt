@@ -7,9 +7,7 @@ namespace ECS{
 	//Singleton class of EntityManager: only one Instance of this object
 	public class EntityManager {
 
-		static Dictionary<long, List<IComponent>> entityDir = new Dictionary<long, List<IComponent>> ();
-		//List of all Entities in game
-		static List<IEntity> entityList = new List<IEntity> ();
+		static Dictionary<int, List<IComponent>> entityDir = new Dictionary<int, List<IComponent>> ();
 
 		/*returns a component of a specific entityID:
 		 * returns component if 
@@ -18,7 +16,7 @@ namespace ECS{
 		 * 	-the entity does not exist
 		 * 	-the entity does exist but doesn't have the component of Type type
 		 * */
-		public static IComponent getComponent(long entityID, Type type)
+		public static IComponent getComponent(int entityID, Type type)
 		{
 			if (type.IsSubclassOf (typeof(IComponent)) && hasEntity(entityID)) {
 				foreach(IComponent compo in entityDir[entityID]){
@@ -32,18 +30,26 @@ namespace ECS{
 
 		//adds a new Entity to the List (ID is generated in IEntity)
 		public static void addEntity(IEntity entity){
-			entityList.Add (entity);
 			entityDir.Add (entity.id, new List<IComponent>());
 		}
 
-		//returns true if the searched entityID is in List.
-		//return false if not (DUUUH....)
-		public static bool hasEntity(long id){
+		public static int generateEntity(){
+			int id = generateID ();
+			while (entityDir.ContainsKey (id)) {
+				id = generateID();
+			}
+			entityDir.Add (id, new List<IComponent> ());
+			return id;
+		}
+
+		//returns true if the searched entityID is in Directory.
+		//returns false if not (DUUUH....)
+		public static bool hasEntity(int id){
 			return entityDir.ContainsKey (id);
 		}
 
 		//returns true if the specific id owns a component of type T (where T : IComponent)
-		public static bool hasComponent<T>(long id) where T : IComponent
+		public static bool hasComponent<T>(int id) where T : IComponent
 		{
 			if(hasEntity (id)){
 				foreach(IComponent compo in entityDir[id]){
@@ -55,7 +61,7 @@ namespace ECS{
 			return false;
 		}
 		
-		public static bool hasComponent(long id, Type t)
+		public static bool hasComponent(int id, Type t)
 		{
 			if(hasEntity (id)){
 				foreach(IComponent compo in entityDir[id]){
@@ -67,7 +73,7 @@ namespace ECS{
 			return false;
 		}
 
-		public static void addComponent<T>(long id, T component) where T : IComponent
+		public static void addComponent<T>(int id, T component) where T : IComponent
 		{
 			if (entityDir.ContainsKey(id)) {
 				if(!hasComponent<T>(id)){
@@ -76,7 +82,7 @@ namespace ECS{
 			}
 		}
 		
-		public static void addComponent(long id, IComponent component)
+		public static void addComponent(int id, IComponent component)
 		{
 			if (entityDir.ContainsKey (id)) {
 				Type type = component.GetType ();
@@ -99,8 +105,18 @@ namespace ECS{
 			return hasComponent<T> (entity.id);
 		}
 
-		private int generateID(){
+		private static int generateID(){
 			return UnityEngine.Random.Range(0, int.MaxValue);
+		}
+
+		public static void printStatus(){
+			Debug.Log ("Status: ");
+			foreach (int id in entityDir.Keys) {
+				Debug.Log ("Entity (" + id + ")");
+				foreach(IComponent compo in entityDir[id]){
+					Debug.Log("\t" + compo.GetType ());
+				}
+			}
 		}
 	}
 }

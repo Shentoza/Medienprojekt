@@ -12,6 +12,6 @@ public class LightRotator : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.transform.RotateAround (new Vector3 (0, 0, 0), new Vector3 (1, 0, 0), angle);
+		this.transform.RotateAround (new Vector3 (0, 0, 0), new Vector3 (0, 1, 0), angle);
 	}
 }
