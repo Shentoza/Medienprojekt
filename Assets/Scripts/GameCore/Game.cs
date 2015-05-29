@@ -34,14 +34,13 @@ public class Game : MonoBehaviour
 		foreach (GameObject g in GameObject.FindObjectsOfType(typeof(GameObject))) {
 			switch(g.tag){
 				case "Player":
-					generatePlayer ();
-					g.AddComponent(typeof(PlayerComponent));
-				//g.AddComponent(typeof(PlayerComponent));
+					generatePlayer (g);
 					break;
 				case "Enemy":
-					generateEnemy();
+					generateEnemy(g);
 					break;
 				case "Object":
+					
 				default:
 					break;
 			}
@@ -53,15 +52,14 @@ public class Game : MonoBehaviour
 		ECSEngine.mainLoop (Time.deltaTime);
 	}
 
-	public void generatePlayer(){
-		int playerID = EntityManager.generateEntity ();
-		EntityManager.addComponent(playerID, typeof(PlayerComponent));
-		EntityManager.addComponent(playerID, typeof(InputComponent));
+	public void generatePlayer(GameObject g){
+		EntityManager.addComponent(g, typeof(PlayerComponent));
+		EntityManager.addComponent(g, typeof(InputComponent));
 	}
 
-	public void generateEnemy(){
-		int enemyID = EntityManager.generateEntity ();
-		EntityManager.addComponent(enemyID, typeof(EnemyComponent));
+	public void generateEnemy(GameObject g){
+		EntityManager.generateEntity (g);
+		EntityManager.addComponent(g, typeof(EnemyComponent));
 	}
 
 
