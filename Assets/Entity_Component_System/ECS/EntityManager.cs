@@ -7,7 +7,7 @@ namespace ECS{
 	//Singleton class of EntityManager: only one Instance of this object
 	public class EntityManager {
 
-		static Dictionary<int, List<IComponent>> entityDir = new Dictionary<int, List<IComponent>> ();
+		static Dictionary<int, List<Type>> entityDir = new Dictionary<int, List<Type>> ();
 
 		/*returns a component of a specific entityID:
 		 * returns component if 
@@ -16,11 +16,11 @@ namespace ECS{
 		 * 	-the entity does not exist
 		 * 	-the entity does exist but doesn't have the component of Type type
 		 * */
-		public static IComponent getComponent(int entityID, Type type)
+		public static Type getComponent(int entityID, Type type)
 		{
 			if (type.IsSubclassOf (typeof(IComponent)) && hasEntity(entityID)) {
-				foreach(IComponent compo in entityDir[entityID]){
-					if(compo.GetType() == type){
+				foreach(Type compo in entityDir[entityID]){
+					if(compo == type){
 						return compo;
 					}
 				}
@@ -28,17 +28,12 @@ namespace ECS{
 			return null;
 		}
 
-		//adds a new Entity to the List (ID is generated in IEntity)
-		public static void addEntity(IEntity entity){
-			entityDir.Add (entity.id, new List<IComponent>());
-		}
-
 		public static int generateEntity(){
 			int id = generateID ();
 			while (entityDir.ContainsKey (id)) {
 				id = generateID();
 			}
-			entityDir.Add (id, new List<IComponent> ());
+			entityDir.Add (id, new List<Type> ());
 			return id;
 		}
 
@@ -48,61 +43,36 @@ namespace ECS{
 			return entityDir.ContainsKey (id);
 		}
 
-		//returns true if the specific id owns a component of type T (where T : IComponent)
-		public static bool hasComponent<T>(int id) where T : IComponent
+		
+		public static bool hasComponent(int id, Type t)
 		{
-			if(hasEntity (id)){
-				foreach(IComponent compo in entityDir[id]){
-					if(compo.GetType () == typeof(T)){
-						return true;
+			if(t.IsSubclassOf(typeof(IComponent))){
+				if(hasEntity (id)){
+					foreach(Type compo in entityDir[id]){
+						if(compo == t){
+								return true;
+							}
 					}
 				}
 			}
 			return false;
 		}
 		
-		public static bool hasComponent(int id, Type t)
+		public static void addComponent(int id, Type component)
 		{
-			if(hasEntity (id)){
-				foreach(IComponent compo in entityDir[id]){
-					if(compo.GetType () == t){
-							return true;
-						}
-				}
-			}
-			return false;
-		}
-
-		public static void addComponent<T>(int id, T component) where T : IComponent
-		{
-			if (entityDir.ContainsKey(id)) {
-				if(!hasComponent<T>(id)){
-					entityDir[id].Add (component);
-				}
-			}
-		}
-		
-		public static void addComponent(int id, IComponent component)
-		{
-			if (entityDir.ContainsKey (id)) {
-				Type type = component.GetType ();
-				if (!hasComponent (id, type)) {
-					entityDir[id].Add (component);
+			if (component.IsSubclassOf (typeof(IComponent))) {
+				if (entityDir.ContainsKey (id)) {
+					if (!hasComponent (id, component)) {
+						entityDir[id].Add (component);
+					}
 				}
 			}
 		}
 
-		//returns true if the specific entity owns a component of type t (checks if t is subclass of IComponent)
+		//returns true if the specific entity owns a component of type t (checks if t is subclass of IIComponent)
 		public static bool hasComponent(IEntity entity, Type t)
 		{
 			return hasComponent (entity.id, t);
-		}
-
-		//returns true if the specific entity owns a component of type T (where T : IComponent)
-		//only usable in this class
-		public static bool hasComponent<T>(IEntity entity) where T : IComponent
-		{
-			return hasComponent<T> (entity.id);
 		}
 
 		private static int generateID(){
@@ -110,13 +80,15 @@ namespace ECS{
 		}
 
 		public static void printStatus(){
-			Debug.Log ("Status: ");
+			string status = "Status: \n";
 			foreach (int id in entityDir.Keys) {
-				Debug.Log ("Entity (" + id + ")");
-				foreach(IComponent compo in entityDir[id]){
-					Debug.Log("\t" + compo.GetType ());
+				status += "Entity (" + id + ")\n";
+				foreach(Type compo in entityDir[id]){
+					status += "\t" + compo + "\n";
 				}
 			}
+			Debug.Log(status);
+
 		}
 	}
 }

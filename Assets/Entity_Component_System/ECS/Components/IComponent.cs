@@ -1,9 +1,10 @@
 using System.Collections;
+using UnityEngine;
 
 namespace ECS{
-	public interface IComponent
+	public abstract class IComponent : MonoBehaviour
 	{
-		void reset();
+		public abstract void reset();
 	}
 }
 

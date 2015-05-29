@@ -37,8 +37,7 @@ public class PhysicComponent : IComponent
 		m_rigidBody = rigidBody;
 	}
 
-
-	void IComponent.reset(){
+	override public void reset(){
 
 	}
 

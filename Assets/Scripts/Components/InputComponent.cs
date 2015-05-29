@@ -1,6 +1,6 @@
 using System;
 using ECS;
-
+using UnityEngine;
 public class InputComponent : IComponent{
 
 
@@ -17,7 +17,7 @@ public class InputComponent : IComponent{
 		this.m_inputAction2 = inputAction2;
 	}
 
-	void IComponent.reset(){
+	override public void reset(){
 		m_inputLeft = "A";
 		m_inputRight = "D";
 		m_inputUp = "W";

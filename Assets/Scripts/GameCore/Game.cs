@@ -10,6 +10,7 @@
 using System;
 using UnityEngine;
 using ECS;
+using System.Collections;
 
 public class Game : MonoBehaviour
 {
@@ -32,16 +33,20 @@ public class Game : MonoBehaviour
 		}
 		foreach (GameObject g in GameObject.FindObjectsOfType(typeof(GameObject))) {
 			switch(g.tag){
-			case "Player":
-				generatePlayer ();
-				break;
-			case "Enemy":
-				break;
-			default:
-				break;
-
+				case "Player":
+					generatePlayer ();
+					g.AddComponent(typeof(PlayerComponent));
+				//g.AddComponent(typeof(PlayerComponent));
+					break;
+				case "Enemy":
+					generateEnemy();
+					break;
+				case "Object":
+				default:
+					break;
 			}
 		}
+		EntityManager.printStatus ();
 	}
 
 	void Update(){
@@ -50,10 +55,13 @@ public class Game : MonoBehaviour
 
 	public void generatePlayer(){
 		int playerID = EntityManager.generateEntity ();
-		EntityManager.addComponent (playerID, new InputComponent ("A", "D", "W", "Space", "O", "P"));
-		EntityManager.addComponent (playerID, new InputComponent ("A", "D", "W", "Space", "O", "P"));
-		EntityManager.addComponent (playerID, new RenderComponent ());
-		EntityManager.printStatus ();
+		EntityManager.addComponent(playerID, typeof(PlayerComponent));
+		EntityManager.addComponent(playerID, typeof(InputComponent));
+	}
+
+	public void generateEnemy(){
+		int enemyID = EntityManager.generateEntity ();
+		EntityManager.addComponent(enemyID, typeof(EnemyComponent));
 	}
 
 
