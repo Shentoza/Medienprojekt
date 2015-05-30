@@ -16,18 +16,20 @@ public class InputSystem : ISystem
 		foreach (GameObject g in gameObjects) {
 			InputComponent input = (InputComponent)g.GetComponent(typeof(InputComponent));
 			Rigidbody2D rigidBody = (Rigidbody2D)g.GetComponent (typeof(Rigidbody2D));
-			if(Input.GetKey(input.getInputUp ())){
+			if(Input.GetKey(input.inputUp)){
 				rigidBody.velocity = new Vector2(0,2);
-			}else if(Input.GetKey(input.getInputLeft ())){
-				
-			}else if(Input.GetKey(input.getInputRight ())){
-				
-			}else if(Input.GetKey(input.getInputAttack ())){
-				
-			}else if(Input.GetKey(input.getInputAction_1 ())){
-				
-			}else if(Input.GetKey(input.getInputAction_2 ())){
-				
+			}else if(Input.GetKey(input.inputLeft)){
+				rigidBody.velocity = new Vector2(-2,0);
+			}else if(Input.GetKey(input.inputRight)){
+				rigidBody.velocity = new Vector2(2,0);
+			}else if(Input.GetKey(input.inputAttack)){
+				rigidBody.velocity = new Vector2(0,0);
+			}else if(Input.GetKey(input.inputAction1)){
+				rigidBody.velocity = new Vector2(0,0);
+			}else if(Input.GetKey(input.inputAction2)){
+				rigidBody.velocity = new Vector2(0,0);
+			}else{
+				rigidBody.velocity = new Vector2(0,0);
 			}
 
 		}

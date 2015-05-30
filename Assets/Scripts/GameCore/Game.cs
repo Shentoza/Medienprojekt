@@ -55,12 +55,12 @@ public class Game : MonoBehaviour
 	public void generatePlayer(GameObject g){
 		EntityManager.addComponent(g, typeof(PlayerComponent));
 		InputComponent inputComponent = (InputComponent) EntityManager.addComponent(g, typeof(InputComponent));
-		inputComponent.setInputUp ("w");
-		inputComponent.setInputLeft ("a");
-		inputComponent.setInputRight ("d");
-		inputComponent.setInputAttack ("j");
-		inputComponent.setInputAction_1 ("o");
-		inputComponent.setInputAction_2 ("p");
+		inputComponent.inputUp 	= "w";
+		inputComponent.inputLeft = "a";
+		inputComponent.inputRight = "d";
+		inputComponent.inputAttack = "j";
+		inputComponent.inputAction1 = "o";
+		inputComponent.inputAction2 = "p";
 	}
 
 	public void generateEnemy(GameObject g){
