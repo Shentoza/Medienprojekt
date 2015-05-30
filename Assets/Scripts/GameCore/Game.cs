@@ -61,6 +61,14 @@ public class Game : MonoBehaviour
 		inputComponent.inputAttack = "j";
 		inputComponent.inputAction1 = "o";
 		inputComponent.inputAction2 = "p";
+		Sprite ryu = Resources.Load("Sprites/Characters/Ryu_Base", typeof(Sprite)) as Sprite;
+		SpriteRenderer renderer = (SpriteRenderer) EntityManager.addComponent (g, typeof(SpriteRenderer));
+		renderer.sprite = ryu;
+		BoxCollider2D collider = (BoxCollider2D)EntityManager.addComponent (g, typeof(BoxCollider2D));
+		collider.size = renderer.bounds.size;
+		Rigidbody2D rigidBody = (Rigidbody2D)EntityManager.addComponent (g, typeof(Rigidbody2D));
+		rigidBody.gravityScale = 0;
+
 	}
 
 	public void generateEnemy(GameObject g){

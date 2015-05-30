@@ -19,4 +19,8 @@ public class InputComponent : IComponent{
 		inputAction1 = "o";
 		inputAction2 = "p";
 	}
+
+	void Start(){
+
+	}
 }
