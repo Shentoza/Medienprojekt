@@ -7,7 +7,7 @@ namespace ECS{
 	//Singleton class of EntityManager: only one Instance of this object
 	public class EntityManager {
 
-		static Dictionary<GameObject, List<Type>> entityDir = new Dictionary<GameObject, List<Type>> ();
+		static List<GameObject> entityDir = new List<GameObject> ();
 
 		/*returns a component of a specific entityID:
 		 * returns component if 
@@ -16,41 +16,33 @@ namespace ECS{
 		 * 	-the entity does not exist
 		 * 	-the entity does exist but doesn't have the component of Type type
 		 * */
-		public static Type getComponent(GameObject entity, Type type)
+		public static Component getComponent(GameObject entity, Type type)
 		{
-			if (type.IsSubclassOf (typeof(IComponent)) && hasEntity(entity)) {
-				foreach(Type compo in entityDir[entity]){
-					if(compo == type){
-						return compo;
-					}
-				}
+			if (type.IsSubclassOf (typeof(IComponent))) {
+				return entity.GetComponent (type);
 			}
 			return null;
 		}
 
 		//Generates a new Entity if not in Directory
 		public static void generateEntity(GameObject entity){
-			if (!entityDir.ContainsKey (entity)) {
-				entityDir.Add (entity, new List<Type> ());
+			if (!entityDir.Contains(entity)) {
+				entityDir.Add (entity);
 			}
 		}
 
 		//returns true if the searched entityID is in Directory.
 		//returns false if not (DUUUH....)
 		public static bool hasEntity(GameObject entity){
-			return entityDir.ContainsKey (entity);
+			return entityDir.Contains (entity);
 		}
 
 		
 		public static bool hasComponent(GameObject entity, Type t)
 		{
-			if(t.IsSubclassOf(typeof(IComponent))){
+			if(t.IsSubclassOf(typeof(Component))){
 				if(hasEntity (entity)){
-					foreach(Type compo in entityDir[entity]){
-						if(compo == t){
-								return true;
-							}
-					}
+					return (entity.GetComponent(t) == null) ? false : true;
 				}
 			}
 			return false;
@@ -58,28 +50,60 @@ namespace ECS{
 		
 		public static void addComponent(GameObject entity, Type component)
 		{
-			if (component.IsSubclassOf (typeof(IComponent))) {
-				if (entityDir.ContainsKey (entity)) {
+			if (component.IsSubclassOf (typeof(Component))) {
+				if (entityDir.Contains (entity)) {
 					if (!hasComponent (entity, component)) {
-						entityDir[entity].Add (component);
+						entity.AddComponent (component);
 					}
 				}else{
 					generateEntity (entity);
-					entityDir[entity].Add (component);
+					entity.AddComponent (component);
 				}
 			}
 		}
 
 		public static void printStatus(){
 			string status = "Status: \n";
-			foreach (GameObject entity in entityDir.Keys) {
+			foreach (GameObject entity in entityDir) {
 				status += "Entity (" + entity.GetInstanceID() + ")\n";
-				foreach(Type compo in entityDir[entity]){
-					status += "\t" + compo + "\n";
+				foreach(Component compo in entity.GetComponents(typeof(Component))){
+					status += "\t" + compo.GetType () + "\n";
 				}
 			}
 			Debug.Log(status);
 
+			string status2 = "Status: \n";
+			foreach (GameObject entity in getGameObjectsWithComponents(typeof(PlayerComponent))) {
+				status2 += "Entity (" + entity.GetInstanceID() + ")\n";
+				foreach(Component compo in entity.GetComponents(typeof(Component))){
+					status2 += "\t" + compo.GetType () + "\n";
+				}
+			}
+			Debug.Log(status2);
+
+
+		}
+
+		public static GameObject[] getGameObjectsWithComponents(params Type[] t){
+			List<GameObject> list = new List<GameObject>();
+
+			foreach (GameObject g  in entityDir) {
+				bool hasAllCompos = true;
+				for(int i = 0; i < t.Length; i++){
+					if(!hasComponent (g, t[i])){
+						hasAllCompos = false;
+					}
+				}
+				if(hasAllCompos){
+					list.Add (g);
+				}
+			}
+
+			GameObject[] go = new GameObject[list.Count];
+			for (int i = 0; i < list.Count; ++i) {
+				go[i] = list[i];
+			}
+			return go;
 		}
 	}
 }

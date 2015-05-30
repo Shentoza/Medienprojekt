@@ -3,11 +3,8 @@ using ECS;
 
 public class RenderSystem : ISystem
 {
-	public RenderSystem ()
-	{
-		foreach (IEntity entity in ECSEngine.getInstance ().getList ()) {
 
-		}
+	public RenderSystem (){
 
 	}
 
