@@ -4,13 +4,8 @@ using UnityEngine;
 namespace ECS{
 	public class ECSEngine
 	{
-		private static ECSEngine engine = new ECSEngine();
 		
-		static List<ISystem> systemList;
-		
-		private ECSEngine(){
-			systemList = new List<ISystem>();
-		}
+		static List<ISystem> systemList = new List<ISystem>();
 		
 		// mainLoop is called once per frame
 		public static void mainLoop (float delta)
@@ -20,15 +15,11 @@ namespace ECS{
 			}
 		}
 		
-		public void addSystem(ISystem system){
+		public static void addSystem(ISystem system){
 			systemList.Add (system);
 		}
-		
-		public static ECSEngine getInstance(){
-			return engine;
-		}
 
-		public List<ISystem> getList(){
+		public static List<ISystem> getList(){
 			return systemList;
 		}
 	}

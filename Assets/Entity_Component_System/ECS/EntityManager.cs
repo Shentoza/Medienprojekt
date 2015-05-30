@@ -48,7 +48,7 @@ namespace ECS{
 			return false;
 		}
 		
-		public static void addComponent(GameObject entity, Type component)
+		public static Component addComponent(GameObject entity, Type component)
 		{
 			if (component.IsSubclassOf (typeof(Component))) {
 				if (entityDir.Contains (entity)) {
@@ -60,6 +60,7 @@ namespace ECS{
 					entity.AddComponent (component);
 				}
 			}
+			return entity.GetComponent (component);
 		}
 
 		public static void printStatus(){

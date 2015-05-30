@@ -15,6 +15,8 @@ public class Game : MonoBehaviour
 	//which holds this script and enable printControls in Components Game script
 	public bool printControls = false;
 
+	InputSystem inputSystem;
+
 	void Start ()
 	{
 		Debug.Log ("Game start");
@@ -37,6 +39,13 @@ public class Game : MonoBehaviour
 			}
 		}
 		EntityManager.printStatus ();
+
+		initializeGame ();
+	}
+
+	void initializeGame(){
+		inputSystem = new InputSystem ();
+		ECSEngine.addSystem (inputSystem);
 	}
 
 	void Update(){
@@ -45,7 +54,13 @@ public class Game : MonoBehaviour
 
 	public void generatePlayer(GameObject g){
 		EntityManager.addComponent(g, typeof(PlayerComponent));
-		EntityManager.addComponent(g, typeof(InputComponent));
+		InputComponent inputComponent = (InputComponent) EntityManager.addComponent(g, typeof(InputComponent));
+		inputComponent.setInputUp ("w");
+		inputComponent.setInputLeft ("a");
+		inputComponent.setInputRight ("d");
+		inputComponent.setInputAttack ("j");
+		inputComponent.setInputAction_1 ("o");
+		inputComponent.setInputAction_2 ("p");
 	}
 
 	public void generateEnemy(GameObject g){
