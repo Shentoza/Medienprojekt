@@ -12,26 +12,25 @@ public class InputSystem : ISystem
 	}
 
 	void ISystem.update(float delta){
-		GameObject[] gameObjects = EntityManager.getGameObjectsWithComponents (typeof(InputComponent), typeof(Rigidbody2D));
+		GameObject[] gameObjects = EntityManager.getGameObjectsWithComponents (typeof(MovementStateComponent), typeof(InputComponent));
 		foreach (GameObject g in gameObjects) {
 			InputComponent input = (InputComponent)g.GetComponent(typeof(InputComponent));
-			Rigidbody2D rigidBody = (Rigidbody2D)g.GetComponent (typeof(Rigidbody2D));
+			MovementStateComponent movement = (MovementStateComponent) g.GetComponent (typeof(MovementStateComponent));
 			if(Input.GetKey(input.inputUp)){
-				rigidBody.velocity = new Vector2(0,2);
+				movement.movementState = MovementState.JUMP;
 			}else if(Input.GetKey(input.inputLeft)){
-				rigidBody.velocity = new Vector2(-2,0);
+				movement.movementState = MovementState.WALK;
 			}else if(Input.GetKey(input.inputRight)){
-				rigidBody.velocity = new Vector2(2,0);
+				movement.movementState = MovementState.RUN;
 			}else if(Input.GetKey(input.inputAttack)){
-				rigidBody.velocity = new Vector2(0,0);
+				movement.movementState = MovementState.ATTACK;
 			}else if(Input.GetKey(input.inputAction1)){
-				rigidBody.velocity = new Vector2(0,0);
+				movement.movementState = MovementState.ACTION1;
 			}else if(Input.GetKey(input.inputAction2)){
-				rigidBody.velocity = new Vector2(0,0);
+				movement.movementState = MovementState.ACTION2;
 			}else{
-				rigidBody.velocity = new Vector2(0,0);
+				movement.movementState = MovementState.IDLE;
 			}
-
 		}
 	}
 

@@ -16,6 +16,7 @@ public class Game : MonoBehaviour
 	public bool printControls = false;
 
 	InputSystem inputSystem;
+	PhysicsSystem physicsSystem;
 
 	void Start ()
 	{
@@ -32,8 +33,9 @@ public class Game : MonoBehaviour
 				case "Enemy":
 					generateEnemy(g);
 					break;
-				case "Object":
-					
+				case "Platform":
+					generatePlatform (g);
+					break;
 				default:
 					break;
 			}
@@ -45,7 +47,9 @@ public class Game : MonoBehaviour
 
 	void initializeGame(){
 		inputSystem = new InputSystem ();
+		physicsSystem = new PhysicsSystem ();
 		ECSEngine.addSystem (inputSystem);
+		ECSEngine.addSystem (physicsSystem);
 	}
 
 	void Update(){
@@ -55,6 +59,7 @@ public class Game : MonoBehaviour
 	public void generatePlayer(GameObject g){
 		EntityManager.addComponent(g, typeof(PlayerComponent));
 		InputComponent inputComponent = (InputComponent) EntityManager.addComponent(g, typeof(InputComponent));
+		Instantiate(new GameObject("Trottel"));
 		inputComponent.inputUp 	= "w";
 		inputComponent.inputLeft = "a";
 		inputComponent.inputRight = "d";
@@ -68,12 +73,18 @@ public class Game : MonoBehaviour
 		collider.size = renderer.bounds.size;
 		Rigidbody2D rigidBody = (Rigidbody2D)EntityManager.addComponent (g, typeof(Rigidbody2D));
 		rigidBody.gravityScale = 0;
+		EntityManager.addComponent (g, typeof(MovementStateComponent));
 
 	}
 
 	public void generateEnemy(GameObject g){
 		EntityManager.generateEntity (g);
 		EntityManager.addComponent(g, typeof(EnemyComponent));
+	}
+
+	public void generatePlatform(GameObject g){
+		BoxCollider2D collider = (BoxCollider2D) EntityManager.addComponent (g, typeof(BoxCollider2D));
+		collider.size = new Vector2 (10, 1);
 	}
 
 
