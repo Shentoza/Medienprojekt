@@ -17,6 +17,7 @@ public class Game : MonoBehaviour
 
 	InputSystem inputSystem;
 	PhysicsSystem physicsSystem;
+	HealthSystem healthSystem;
 
 	void Start ()
 	{
@@ -48,8 +49,10 @@ public class Game : MonoBehaviour
 	void initializeGame(){
 		inputSystem = new InputSystem ();
 		physicsSystem = new PhysicsSystem ();
+		healthSystem = new HealthSystem ();
 		ECSEngine.addSystem (inputSystem);
 		ECSEngine.addSystem (physicsSystem);
+		ECSEngine.addSystem (healthSystem);
 	}
 
 	void Update(){
@@ -74,6 +77,7 @@ public class Game : MonoBehaviour
 		Rigidbody2D rigidBody = (Rigidbody2D)EntityManager.addComponent (g, typeof(Rigidbody2D));
 		rigidBody.gravityScale = 0;
 		EntityManager.addComponent (g, typeof(MovementStateComponent));
+		AttributeComponent attributes = (AttributeComponent)EntityManager.addComponent (g, typeof(AttributeComponent));
 
 	}
 
@@ -84,7 +88,11 @@ public class Game : MonoBehaviour
 
 	public void generatePlatform(GameObject g){
 		BoxCollider2D collider = (BoxCollider2D) EntityManager.addComponent (g, typeof(BoxCollider2D));
-		collider.size = new Vector2 (10, 1);
+		collider.size = new Vector2 (100, 1);
+	}
+
+	void OnCollisionEnter2D(){
+		Debug.Log ("Hallo");
 	}
 
 

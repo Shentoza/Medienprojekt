@@ -18,7 +18,7 @@ namespace ECS{
 		 * */
 		public static Component getComponent(GameObject entity, Type type)
 		{
-			if (type.IsSubclassOf (typeof(IComponent))) {
+			if (type.IsSubclassOf (typeof(Component))) {
 				return entity.GetComponent (type);
 			}
 			return null;

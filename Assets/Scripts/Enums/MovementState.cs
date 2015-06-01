@@ -3,8 +3,10 @@ using System;
 public enum MovementState
 {
 	IDLE,
-	WALK,
-	RUN,
+	WALK_LEFT,
+	WALK_RIGHT,
+	RUN_LEFT,
+	RUN_RIGHT,
 	JUMP,
 	ATTACK,
 	ACTION1,
