@@ -14,6 +14,7 @@ public class InputSystem : ISystem
 	void ISystem.update(float delta){
 		GameObject[] gameObjects = EntityManager.getGameObjectsWithComponents (typeof(MovementStateComponent), typeof(InputComponent));
 		foreach (GameObject g in gameObjects) {
+
 			InputComponent input = (InputComponent)g.GetComponent(typeof(InputComponent));
 			MovementStateComponent movement = (MovementStateComponent) g.GetComponent (typeof(MovementStateComponent));
 

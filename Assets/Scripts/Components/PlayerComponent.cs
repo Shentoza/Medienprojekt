@@ -16,16 +16,18 @@ public class PlayerComponent : IComponent
 	}
 
 	//Wird 2 Mal aufgerufen
-	void OnCollisionEnter2D(){
+	void OnCollisionEnter2D(Collision2D coll){
 		if (!collision) {
 			collision = true;
-			Debug.Log ("Hallo");
+			if(coll.gameObject.tag == "Platform"){
+				AttributeComponent attributes = (AttributeComponent) this.gameObject.GetComponent (typeof(AttributeComponent));
+				attributes.health -= 100;
+			}
 		}
 	}
 
-	void OnCollisionExit2D(){
-		OnCollisionExit2D = false;
-		Debug.Log ("Exit");
+	void OnCollisionExit2D(Collision2D coll){
+		collision = false;
 	}
 
 }

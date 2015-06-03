@@ -1,0 +1,15 @@
+<Level>
+	<Gameobject>
+		<Components>
+			<PlayerComponent />
+		</Components>
+			
+		<tag>
+		
+		</tag>
+		<transform>
+		
+		</transform>
+	</Gameobject>
+</Level>
+		

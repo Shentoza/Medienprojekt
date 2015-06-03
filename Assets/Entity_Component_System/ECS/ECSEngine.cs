@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+
 namespace ECS{
 	public class ECSEngine
 	{
 		
 		static List<ISystem> systemList = new List<ISystem>();
+		static List<IComponent> components = new List<IComponent> ();
 		
 		// mainLoop is called once per frame
 		public static void mainLoop (float delta)
@@ -21,6 +24,19 @@ namespace ECS{
 
 		public static List<ISystem> getList(){
 			return systemList;
+		}
+
+		public static void addComponentType(IComponent compo){
+			foreach (IComponent c in components) {
+				if(c.GetType () == compo.GetType ()){
+					return;
+				}
+			}
+			components.Add (compo);
+		}
+
+		public static List<IComponent> getComponents(){
+			return components;
 		}
 	}
 }

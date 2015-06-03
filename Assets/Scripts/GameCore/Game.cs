@@ -47,6 +47,8 @@ public class Game : MonoBehaviour
 	}
 
 	void initializeGame(){
+		XMLParser.readFile ("Assets/Resources/XML_Files/Level_1.xml");
+		XMLParser.gameObjectsThroughXML ();
 		inputSystem = new InputSystem ();
 		physicsSystem = new PhysicsSystem ();
 		healthSystem = new HealthSystem ();
@@ -76,9 +78,9 @@ public class Game : MonoBehaviour
 		collider.size = renderer.bounds.size;
 		Rigidbody2D rigidBody = (Rigidbody2D)EntityManager.addComponent (g, typeof(Rigidbody2D));
 		rigidBody.gravityScale = 0;
-		EntityManager.addComponent (g, typeof(MovementStateComponent));
+		rigidBody.transform.localPosition = renderer.sprite.bounds.center;
+		MovementStateComponent movement = (MovementStateComponent) EntityManager.addComponent (g, typeof(MovementStateComponent));
 		AttributeComponent attributes = (AttributeComponent)EntityManager.addComponent (g, typeof(AttributeComponent));
-
 	}
 
 	public void generateEnemy(GameObject g){
@@ -89,10 +91,12 @@ public class Game : MonoBehaviour
 	public void generatePlatform(GameObject g){
 		BoxCollider2D collider = (BoxCollider2D) EntityManager.addComponent (g, typeof(BoxCollider2D));
 		collider.size = new Vector2 (100, 1);
-	}
-
-	void OnCollisionEnter2D(){
-		Debug.Log ("Hallo");
+		Sprite platform = Resources.Load ("Sprites/Environment/Block", typeof(Sprite)) as Sprite;
+		Bounds bounds = platform.bounds;
+		bounds.max = new Vector3 (50, 1, 0);
+		bounds.min = new Vector3 (-50, -1, 0);
+		SpriteRenderer renderer = (SpriteRenderer)EntityManager.addComponent (g, typeof(SpriteRenderer));
+		renderer.sprite = platform;
 	}
 
 

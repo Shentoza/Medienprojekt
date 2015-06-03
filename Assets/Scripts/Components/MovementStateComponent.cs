@@ -13,8 +13,10 @@ public class MovementStateComponent : IComponent
 	}
 
 	public void changeMovement(MovementState movementState){
-		lastMovementState = this.movementState;
-		this.movementState = movementState;
+		if (movementState != this.movementState) {
+			lastMovementState = this.movementState;
+			this.movementState = movementState;
+		}
 	}
 
 	public MovementState getLastMovementState(){

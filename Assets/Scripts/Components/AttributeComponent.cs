@@ -4,6 +4,7 @@ using ECS;
 public class AttributeComponent : IComponent
 {
 
+
 	public int health = 100;
 	public int attack = 100;
 	public int armor = 100;
@@ -11,10 +12,6 @@ public class AttributeComponent : IComponent
 	public float MAX_VELOCITY = 8;
 	public float ACCELERATION = 3f;
 	public float DAMPING = 4f;
-
-	void Start(){
-
-	}
 
 	override public void reset(){
 		health = 100;
