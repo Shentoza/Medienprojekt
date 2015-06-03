@@ -8,7 +8,7 @@ namespace ECS{
 	{
 		
 		static List<ISystem> systemList = new List<ISystem>();
-		static List<IComponent> components = new List<IComponent> ();
+		static List<Type> components = new List<Type> ();
 		
 		// mainLoop is called once per frame
 		public static void mainLoop (float delta)
@@ -26,13 +26,15 @@ namespace ECS{
 			return systemList;
 		}
 
-		public static void addComponentType(IComponent compo){
-			foreach (IComponent c in components) {
-				if(c.GetType () == compo.GetType ()){
-					return;
+		public static void addComponentType(Type compo){
+			if(compo.IsSubclassOf(typeof(ICompoenent))){
+				foreach (Type c in components) {
+					if(c == compo){
+						return;
+					}
 				}
+				components.Add (compo);
 			}
-			components.Add (compo);
 		}
 
 		public static List<IComponent> getComponents(){

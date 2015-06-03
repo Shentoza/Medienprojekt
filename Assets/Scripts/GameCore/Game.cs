@@ -47,14 +47,20 @@ public class Game : MonoBehaviour
 	}
 
 	void initializeGame(){
-		XMLParser.readFile ("Assets/Resources/XML_Files/Level_1.xml");
-		XMLParser.gameObjectsThroughXML ();
+		XMLParser.gameObjectsThroughXML ("Assets/Resources/XML_Files/Level_1.xml");
 		inputSystem = new InputSystem ();
 		physicsSystem = new PhysicsSystem ();
 		healthSystem = new HealthSystem ();
+
 		ECSEngine.addSystem (inputSystem);
 		ECSEngine.addSystem (physicsSystem);
 		ECSEngine.addSystem (healthSystem);
+
+		ECSEngine.addComponentType (typeof(AttributeComponent));
+		ECSEngine.addComponentType (typeof(EnemyComponent));
+		ECSEngine.addComponentType (typeof(InputComponent));
+		ECSEngine.addComponentType (typeof(MovementStateComponent));
+		ECSEngine.addComponentType (typeof(PlayerComponent));
 	}
 
 	void Update(){
