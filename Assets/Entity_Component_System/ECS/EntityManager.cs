@@ -7,7 +7,7 @@ namespace ECS{
 	//Singleton class of EntityManager: only one Instance of this object
 	public class EntityManager {
 
-		static List<GameObject> entityDir = new List<GameObject> ();
+		static List<GameObject> entities = new List<GameObject> ();
 
 		/*returns a component of a specific entityID:
 		 * returns component if 
@@ -26,15 +26,15 @@ namespace ECS{
 
 		//Generates a new Entity if not in Directory
 		public static void generateEntity(GameObject entity){
-			if (!entityDir.Contains(entity)) {
-				entityDir.Add (entity);
+			if (!entities.Contains(entity)) {
+				entities.Add (entity);
 			}
 		}
 
 		//returns true if the searched entityID is in Directory.
 		//returns false if not (DUUUH....)
 		public static bool hasEntity(GameObject entity){
-			return entityDir.Contains (entity);
+			return entities.Contains (entity);
 		}
 
 		
@@ -51,7 +51,7 @@ namespace ECS{
 		public static Component addComponent(GameObject entity, Type component)
 		{
 			if (component.IsSubclassOf (typeof(Component))) {
-				if (entityDir.Contains (entity)) {
+				if (entities.Contains (entity)) {
 					if (!hasComponent (entity, component)) {
 						entity.AddComponent (component);
 					}
@@ -65,7 +65,7 @@ namespace ECS{
 
 		public static void printStatus(){
 			string status = "Status: \n";
-			foreach (GameObject entity in entityDir) {
+			foreach (GameObject entity in entities) {
 				status += "Entity (" + entity.GetInstanceID() + ")\n";
 				foreach(Component compo in entity.GetComponents(typeof(Component))){
 					status += "\t" + compo.GetType () + "\n";
@@ -87,8 +87,8 @@ namespace ECS{
 
 		public static GameObject[] getGameObjectsWithComponents(params Type[] t){
 			List<GameObject> list = new List<GameObject>();
-
-			foreach (GameObject g  in entityDir) {
+			
+			foreach (GameObject g  in entities) {
 				bool hasAllCompos = true;
 				for(int i = 0; i < t.Length; i++){
 					if(!hasComponent (g, t[i])){
@@ -99,12 +99,17 @@ namespace ECS{
 					list.Add (g);
 				}
 			}
-
+			
 			GameObject[] go = new GameObject[list.Count];
 			for (int i = 0; i < list.Count; ++i) {
 				go[i] = list[i];
 			}
 			return go;
 		}
+
+		public static List<GameObject> getGameObjects(){
+			return entities;
+		}
+
 	}
 }

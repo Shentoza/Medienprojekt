@@ -27,7 +27,7 @@ namespace ECS{
 		}
 
 		public static void addComponentType(Type compo){
-			if(compo.IsSubclassOf(typeof(ICompoenent))){
+			if(compo.IsSubclassOf(typeof(IComponent))){
 				foreach (Type c in components) {
 					if(c == compo){
 						return;
@@ -37,7 +37,7 @@ namespace ECS{
 			}
 		}
 
-		public static List<IComponent> getComponents(){
+		public static List<Type> getComponents(){
 			return components;
 		}
 	}

@@ -16,7 +16,7 @@ namespace ECS{
 
 		public void addType(){
 			typeString = GetType ().Name;
-			ECSEngine.addComponentType (this);
+			ECSEngine.addComponentType (this.GetType());
 		}
 	}
 }

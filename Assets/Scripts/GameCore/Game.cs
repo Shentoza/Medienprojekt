@@ -47,7 +47,14 @@ public class Game : MonoBehaviour
 	}
 
 	void initializeGame(){
+		ECSEngine.addComponentType (typeof(AttributeComponent));
+		ECSEngine.addComponentType (typeof(EnemyComponent));
+		ECSEngine.addComponentType (typeof(InputComponent));
+		ECSEngine.addComponentType (typeof(MovementStateComponent));
+		ECSEngine.addComponentType (typeof(PlayerComponent));
+
 		XMLParser.gameObjectsThroughXML ("Assets/Resources/XML_Files/Level_1.xml");
+
 		inputSystem = new InputSystem ();
 		physicsSystem = new PhysicsSystem ();
 		healthSystem = new HealthSystem ();
@@ -55,16 +62,16 @@ public class Game : MonoBehaviour
 		ECSEngine.addSystem (inputSystem);
 		ECSEngine.addSystem (physicsSystem);
 		ECSEngine.addSystem (healthSystem);
-
-		ECSEngine.addComponentType (typeof(AttributeComponent));
-		ECSEngine.addComponentType (typeof(EnemyComponent));
-		ECSEngine.addComponentType (typeof(InputComponent));
-		ECSEngine.addComponentType (typeof(MovementStateComponent));
-		ECSEngine.addComponentType (typeof(PlayerComponent));
 	}
 
 	void Update(){
 		ECSEngine.mainLoop (Time.deltaTime);
+	}
+
+	public void generateAllEntities(){
+		foreach (GameObject g in EntityManager.getGameObjects()) {
+			Instantiate(g);
+		}
 	}
 
 	public void generatePlayer(GameObject g){
