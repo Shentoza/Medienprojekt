@@ -30,16 +30,21 @@ public class AttributeComponent : IComponent
 		 */
 	}
 
+	public void changeVelocityY(float acceleration){
+		if (velocity.y < MAX_VELOCITY)
+			velocity.y += velocity.y * acceleration;
+	}
+
 	//This is an interpolation method, which interpolates the actual velocity to endVelocity. milliseconds is the time 
 	//the interpolation durates. Maybe this method will be in PhysicsSystem.
 	//This will be a linear Interpolation
 	public bool interpolateVelocityLinear(float endVelocity, float milliseconds, float delta){
 		if (interpolationTime >= milliseconds) {
 			interpolationTime = 0.0f;
-			velocity = endVelocity;
+			velocity.x = endVelocity;
 			return false;
 		}
-		velocity = interpolationTime / milliseconds * endVelocity;
+		velocity.x = interpolationTime / milliseconds * endVelocity;
 		interpolationTime += delta;
 		return true;
 	}
@@ -48,10 +53,10 @@ public class AttributeComponent : IComponent
 	public bool interpolateVelocityQuadratic(float endVelocity, float milliseconds, float delta){
 		if (interpolationTime >= milliseconds) {
 			interpolationTime = 0.0f;
-			velocity = endVelocity;
+			velocity.x = endVelocity;
 			return false;
 		}
-		velocity = (interpolationTime / milliseconds)*(interpolationTime / milliseconds) * endVelocity;
+		velocity.x = (interpolationTime / milliseconds)*(interpolationTime / milliseconds) * endVelocity;
 		interpolationTime += delta;
 		return true;
 	}
@@ -60,10 +65,10 @@ public class AttributeComponent : IComponent
 	public bool interpolateVelocitySquaric(float endVelocity, float milliseconds, float delta){
 		if (interpolationTime >= milliseconds) {
 			interpolationTime = 0.0f;
-			velocity = endVelocity;
+			velocity.x = endVelocity;
 			return false;
 		}
-		velocity = (interpolationTime / milliseconds)/(interpolationTime / milliseconds) * endVelocity;
+		velocity.x = (interpolationTime / milliseconds)/(interpolationTime / milliseconds) * endVelocity;
 		interpolationTime += delta;
 		return true;
 	}
@@ -73,7 +78,6 @@ public class AttributeComponent : IComponent
 		attack = 100;
 		armor = 100;
 		velocity = new Vector2(0,0);
-		direction = new Vector2 (1, 0);
 	}
 }
 

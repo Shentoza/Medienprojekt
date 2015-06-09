@@ -12,14 +12,15 @@ public class InputSystem : ISystem
 	}
 
 	void ISystem.update(float delta){
-		GameObject[] gameObjects = EntityManager.getGameObjectsWithComponents (typeof(MovementStateComponent), typeof(InputComponent));
+		GameObject[] gameObjects = EntityManager.getGameObjectsWithComponents (typeof(AttributeComponent), typeof(MovementStateComponent), typeof(InputComponent));
 		foreach (GameObject g in gameObjects) {
 
 			InputComponent input = (InputComponent)g.GetComponent(typeof(InputComponent));
 			MovementStateComponent movement = (MovementStateComponent) g.GetComponent (typeof(MovementStateComponent));
-
+			AttributeComponent attribute = (AttributeComponent) g.GetComponent(typeof(AttributeComponent));
 			if(Input.GetKey(input.inputUp)){
 				movement.changeMovement(MovementState.JUMP);
+				attribute.changeVelocityY(4);
 			}else if(Input.GetKey(input.inputLeft)){
 				movement.changeMovement(MovementState.RUN_LEFT);
 			}else if(Input.GetKey(input.inputRight)){
