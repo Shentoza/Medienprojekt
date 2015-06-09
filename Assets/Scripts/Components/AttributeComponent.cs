@@ -31,8 +31,10 @@ public class AttributeComponent : IComponent
 	}
 
 	public void changeVelocityY(float acceleration){
-		if (velocity.y < MAX_VELOCITY)
-			velocity.y += velocity.y * acceleration;
+		Debug.Log (velocity.x + " " + velocity.y + " " + MAX_VELOCITY);
+		if (velocity.y < MAX_VELOCITY) {
+			velocity.y += 0.1f * acceleration;
+		}
 	}
 
 	//This is an interpolation method, which interpolates the actual velocity to endVelocity. milliseconds is the time 
