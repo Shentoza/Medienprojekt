@@ -1,0 +1,33 @@
+<Level>
+	<Gameobject>
+		<Component name="PlayerComponent" />
+			
+		<tag>
+		
+		</tag>
+		<transform>
+		
+		</transform>
+	</Gameobject>
+	<Gameobject>
+		<Component name="EnemyComponent" />
+			
+		<tag>
+		
+		</tag>
+		<transform>
+		
+		</transform>
+	</Gameobject>
+	<Gameobject>
+		<Component name="EnemyComponent"  />
+			
+		<tag>
+		
+		</tag>
+		<transform>
+		
+		</transform>
+	</Gameobject>
+</Level>
+		

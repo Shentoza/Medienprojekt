@@ -18,20 +18,22 @@ public class FollowCamera : MonoBehaviour {
 	private Vector2 minXandY;
 
 	//Reference to the player's transform
-	public Transform player;
+	private Transform player;
+	private Component playerComponent;
+	private bool isAttached;
 
-	void Awake()
+	void Start()
 	{
-		player = GameObject.Find ("Player").transform;
-		if(player == null)
-		{
-			Debug.LogError("Player object not found");
+		playerComponent = GameObject.FindGameObjectWithTag ("Player").GetComponent<Rigidbody2D>();
+		if (playerComponent == null) {
+			isAttached = false;
+		} else {
+			player = playerComponent.transform;
+			isAttached = true;
 		}
-		var backgroundBounds = GameObject.Find ("background").GetComponent<Renderer>().bounds;
-		var camTopLeft = GetComponent<Camera> ().ViewportToWorldPoint (new Vector3 (0, 0, 0));
-		var camBottomRight = GetComponent<Camera> ().ViewportToWorldPoint (new Vector3 (1, 1, 0));
-		minXandY.x = backgroundBounds.min.x - camTopLeft.x;
-		maxXandY.x = backgroundBounds.max.x - camBottomRight.x;
+
+		minXandY.x = -100;
+		maxXandY.x = 100;
 
 	}
 
@@ -48,6 +50,15 @@ public class FollowCamera : MonoBehaviour {
 
 	void FixedUpdate()
 	{
+		if (!isAttached) {
+			playerComponent = GameObject.FindGameObjectWithTag ("Player").GetComponent(typeof(Rigidbody2D));
+			if (playerComponent == null) {
+
+			} else {
+				player = playerComponent.transform;
+				isAttached = true;
+			}
+		}
 		// By default the target x and y coordinates of the camera
 		// are it's current x and y coordinates.
 		float targetX = transform.position.x;
