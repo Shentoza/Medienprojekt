@@ -27,7 +27,7 @@ namespace Editor {
 
 				EditorGUILayout.BeginToggleGroup("Player/Enemy", true);
 					for(int i = 0; i < ECSEngine.getComponents().Count; ++i){
-						EditorGUILayout.Toggle(ECSEngine.getComponents()[i].typeString, false);
+						EditorGUILayout.Toggle(ECSEngine.getComponents()[i].Name, false);
 					}
 				EditorGUILayout.EndToggleGroup();
 
