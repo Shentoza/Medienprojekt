@@ -8,6 +8,7 @@ public class AttributeComponent : IComponent
 	public int health = 100;
 	public int attack = 100;
 	public int armor = 100;
+	public int speed = 4;
 	//Velocity is a Vector because there is a x and y velocity which are independent on one another
 	//if y > 0 we are in a Jumplike State. Or if y > lastgroundTouched.y
 	public Vector2 velocity = new Vector2(0,0);
@@ -15,8 +16,8 @@ public class AttributeComponent : IComponent
 	public float interpolationTime = 0.0f;
 
 	public void changeVelocityX(float acceleration){
-		if(velocity.x < MAX_VELOCITY)
-			velocity.x += velocity.x * acceleration;
+		if (velocity.x < MAX_VELOCITY)
+			velocity = new Vector2 (acceleration*speed, 0);
 		/*
 		 * Acceleration Curve   Damping Curve
 		 *                      

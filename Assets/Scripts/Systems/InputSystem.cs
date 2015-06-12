@@ -18,11 +18,14 @@ public class InputSystem : ISystem
 			InputComponent input = (InputComponent)g.GetComponent(typeof(InputComponent));
 			MovementStateComponent movement = (MovementStateComponent) g.GetComponent (typeof(MovementStateComponent));
 			AttributeComponent attribute = (AttributeComponent) g.GetComponent(typeof(AttributeComponent));
+			float movePlayerVector = 0;
 			if(Input.GetKey(input.inputUp)){
 				movement.changeMovement(MovementState.JUMP);
+				movePlayerVector = Input.GetAxis("Vertical");
 				attribute.changeVelocityY(4);
 			}else if(Input.GetKey(input.inputLeft)){
 				movement.changeMovement(MovementState.RUN_LEFT);
+				attribute.changeVelocityX(movePlayerVector);
 			}else if(Input.GetKey(input.inputRight)){
 				movement.changeMovement(MovementState.RUN_RIGHT);
 			}else if(Input.GetKey(input.inputAttack)){
@@ -33,6 +36,7 @@ public class InputSystem : ISystem
 				movement.changeMovement(MovementState.ACTION2);
 			}else{
 				movement.changeMovement(MovementState.IDLE);
+				attribute.changeVelocityX(0);
 			}
 		}
 	}
