@@ -23,7 +23,7 @@ public class InputSystem : ISystem
 			if(Input.GetKey(input.inputUp)){
 				movement.changeMovement(MovementState.JUMP);
 				movePlayerVector = Input.GetAxis("Vertical");
-				rbody.velocity = new Vector2(0, movePlayerVector * attribute.speed* 10);
+				rbody.velocity = new Vector2(0, movePlayerVector * attribute.speed);
 				//attribute.changeVelocityY(4);
 				}else if(Input.GetKey(input.inputLeft) || Input.GetKey(input.inputRight)){
 				movePlayerVector = Input.GetAxis("Horizontal");
