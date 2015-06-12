@@ -5,10 +5,10 @@ public class AttributeComponent : IComponent
 {
 
 
-	public int health = 100;
-	public int attack = 100;
-	public int armor = 100;
-	public int speed = 4;
+	public float health = 100f;
+	public float attack = 100f;
+	public float armor = 100f;
+	public float speed = 8f;
 	//Velocity is a Vector because there is a x and y velocity which are independent on one another
 	//if y > 0 we are in a Jumplike State. Or if y > lastgroundTouched.y
 	public Vector2 velocity = new Vector2(0,0);
