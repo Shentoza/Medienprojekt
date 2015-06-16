@@ -15,7 +15,7 @@ public class HealthSystem : ISystem
 			AttributeComponent attributes = (AttributeComponent) EntityManager.getComponent(g, typeof(AttributeComponent));
 			MovementStateComponent movement = (MovementStateComponent) EntityManager.getComponent (g, typeof(MovementStateComponent));
 			if(attributes.health <= 0){
-				movement.movementState = MovementState.DIE;
+				//movement.movementState = MovementState.DIE;
 				if(g.tag == "Player"){
 					//Nach Todesanimation: GUI anzeigen, nach Input Spiel beenden/neu laden
 				}else{

@@ -9,6 +9,9 @@ public class AttributeComponent : IComponent
 	public float attack = 100f;
 	public float armor = 100f;
 	public float speed = 8f;
+	public float jumpHeight = 500f;
+	public bool isGrounded = true;
+
 	//Velocity is a Vector because there is a x and y velocity which are independent on one another
 	//if y > 0 we are in a Jumplike State. Or if y > lastgroundTouched.y
 	public Vector2 velocity = new Vector2(0,0);

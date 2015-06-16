@@ -90,7 +90,7 @@ public class Game : MonoBehaviour
 		BoxCollider2D collider = (BoxCollider2D)EntityManager.addComponent (g, typeof(BoxCollider2D));
 		collider.size = renderer.bounds.size;
 		Rigidbody2D rigidBody = (Rigidbody2D)EntityManager.addComponent (g, typeof(Rigidbody2D));
-		rigidBody.gravityScale = 0;
+		rigidBody.gravityScale = 8;
 		rigidBody.transform.localPosition = renderer.sprite.bounds.center;
 		MovementStateComponent movement = (MovementStateComponent) EntityManager.addComponent (g, typeof(MovementStateComponent));
 		AttributeComponent attributes = (AttributeComponent)EntityManager.addComponent (g, typeof(AttributeComponent));
