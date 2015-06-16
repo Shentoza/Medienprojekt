@@ -19,6 +19,9 @@ public class PhysicsSystem : ISystem
 			Rigidbody2D rigidBody = (Rigidbody2D) EntityManager.getComponent (g, typeof(Rigidbody2D));
 			AttributeComponent attributes = (AttributeComponent) EntityManager.getComponent (g, typeof(AttributeComponent));
 			g.transform.position = new Vector3((g.transform.position.x + attributes.velocity.x * delta),g.transform.position.y + attributes.velocity.y* delta,0);
+			float movePlayerVector = Input.GetAxis("Horizontal");
+			rigidBody.velocity = new Vector2(movePlayerVector * attributes.speed, 0 );
+			Debug.Log (movePlayerVector);
 		}
 	}
 }

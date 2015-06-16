@@ -22,12 +22,6 @@ public class InputSystem : ISystem
 			float movePlayerVector = 0;
 			if(Input.GetKey(input.inputUp)){
 				movement.changeMovement(MovementState.JUMP);
-				movePlayerVector = Input.GetAxis("Vertical");
-				rbody.velocity = new Vector2(0, movePlayerVector * attribute.speed);
-				//attribute.changeVelocityY(4);
-				}else if(Input.GetKey(input.inputLeft) || Input.GetKey(input.inputRight)){
-				movePlayerVector = Input.GetAxis("Horizontal");
-				rbody.velocity = new Vector2(movePlayerVector * attribute.speed, 0);
 			}
 			else if(Input.GetKey(input.inputAttack)){
 				movement.changeMovement(MovementState.ATTACK);
