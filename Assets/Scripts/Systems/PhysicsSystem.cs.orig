@@ -31,12 +31,26 @@ public class PhysicsSystem : ISystem
 				rigidBody.AddForce(new Vector2(0, attributes.jumpHeight), ForceMode2D.Force);
 			}
 
+			RaycastHit2D hit;
 			Vector2 origin = new Vector2(g.transform.position.x,g.transform.position.y);
 			origin.y -= (0.01f + collider.size.y/2);
-			RaycastHit2D hit = Physics2D.Raycast(origin, -Vector2.up, 0.01f);
-			Debug.DrawRay(origin, -Vector2.up, Color.red);
-			if(hit.collider != null)
+			if(Physics2D.Raycast(origin, -Vector2.up, 0.01f));
+<<<<<<< Updated upstream
+				if(hit.collider != collider)
+				{
+
+				Debug.DrawRay(origin, -Vector2.up, Color.red, 1.0f);
+					Debug.Log ("Hit!!!!!");
+					attributes.isGrounded = true;
+				}
+=======
+			{
+
+				Debug.DrawRay(origin, -Vector2.up, Color.red, 1.0f);
+				Debug.Log ("Hit!!!!!");
 				attributes.isGrounded = true;
+>>>>>>> Stashed changes
+			}
 
 			if(Input.GetKeyDown ("q"))
 			{
