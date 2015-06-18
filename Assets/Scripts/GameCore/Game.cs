@@ -91,6 +91,7 @@ public class Game : MonoBehaviour
 		collider.size = new Vector2 (2.4f, 4.5f);
 		Rigidbody2D rigidBody = (Rigidbody2D)EntityManager.addComponent (g, typeof(Rigidbody2D));
 		rigidBody.gravityScale = 8;
+		rigidBody.fixedAngle = true;
 		rigidBody.transform.localPosition = renderer.sprite.bounds.center;
 		MovementStateComponent movement = (MovementStateComponent) EntityManager.addComponent (g, typeof(MovementStateComponent));
 		AttributeComponent attributes = (AttributeComponent)EntityManager.addComponent (g, typeof(AttributeComponent));
