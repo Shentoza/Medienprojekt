@@ -5,7 +5,7 @@ using UnityEngine;
 public class PhysicsSystem : ISystem
 {
 
-	float timer = Time.time;
+
 
 	public PhysicsSystem ()
 	{
@@ -15,7 +15,7 @@ public class PhysicsSystem : ISystem
 
 
 	void ISystem.update(float delta){
-		GameObject[] gameObjects = EntityManager.getGameObjectsWithComponents (typeof(Collider2D), typeof(Rigidbody2D),
+		GameObject[] gameObjects = EntityManager.getGameObjectsWithComponents (typeof(BoxCollider2D), typeof(Rigidbody2D),
 		                                                                      typeof(MovementStateComponent));
 		foreach (GameObject g in gameObjects) {
 			MovementStateComponent movement = (MovementStateComponent) EntityManager.getComponent (g, typeof(MovementStateComponent));
@@ -32,18 +32,21 @@ public class PhysicsSystem : ISystem
 			}
 
 
-			if(Physics2D.Raycast(g.transform.position, -Vector2.up, 0.01f));
+
+			if(Physics2D.Raycast(g.transform.position, -Vector2.up, 0.5f));
 			{
-				Debug.Log ("Hit!!!!!");
-				attributes.isGrounded = true;
+				if(hit.collider != collider)
+				{
+					Debug.Log ("Hit!!!!!");
+					attributes.isGrounded = true;
+				}
 			}
 
-			if(Input.GetKey ("q") && timer <= Time.time)
+			if(Input.GetKeyDown ("q"))
 			{
 				collider.size = new Vector2(2.5f, 2.5f);
 				rigidBody.velocity = new Vector2(3 * movePlayerVector * attributes.speed, 0);
 				collider.size = new Vector2(5.12f, 5.12f);
-				timer = Time.time + 5;
 			}
 		
 		}

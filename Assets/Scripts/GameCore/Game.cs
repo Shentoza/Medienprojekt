@@ -88,7 +88,7 @@ public class Game : MonoBehaviour
 		SpriteRenderer renderer = (SpriteRenderer) EntityManager.addComponent (g, typeof(SpriteRenderer));
 		renderer.sprite = ryu;
 		BoxCollider2D collider = (BoxCollider2D)EntityManager.addComponent (g, typeof(BoxCollider2D));
-		collider.size = renderer.bounds.size;
+		collider.size = new Vector2 (2.4f, 4.5f);
 		Rigidbody2D rigidBody = (Rigidbody2D)EntityManager.addComponent (g, typeof(Rigidbody2D));
 		rigidBody.gravityScale = 8;
 		rigidBody.transform.localPosition = renderer.sprite.bounds.center;
